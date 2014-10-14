@@ -32,8 +32,20 @@ app.controller("feCtrl", ["$scope", "$firebase", "$timeout",
 
 		ref_potato.on("value", function(snap) {
 			$timeout(function() {
-				if(typeof snap.val().user_selected != 'undefined' && snap.val().user_selected == $scope.user.id){
-					$scope.hot();
+				if(typeof snap.val().active != 'undefined' 
+					&& snap.val().active == false
+					&& typeof snap.val().user_selected != 'undefined' 
+					&& snap.val().user_selected == $scope.user.id){
+					$scope.youLost();
+				}
+				else if(typeof snap.val().active != 'undefined' 
+					&& snap.val().active == true){
+					$scope.gameOn();
+
+					if(typeof snap.val().user_selected != 'undefined' 
+						&& snap.val().user_selected == $scope.user.id){
+						$scope.hot();
+					}
 				}
 			});
 		});
@@ -42,6 +54,16 @@ app.controller("feCtrl", ["$scope", "$firebase", "$timeout",
 		$scope.hot = function(){
 			$('body').addClass('active');
 			$scope.changePanel('play');
+		}
+
+		$scope.youLost = function(){
+			$('#game_panel form').hide();
+			$('#game_panel h3').show();
+		}
+
+		$scope.gameOn = function(){
+			$('#game_panel form').show();
+			$('#game_panel h3').hide();
 		}
 
 		$scope.addPlayer = function(name){
@@ -98,7 +120,12 @@ app.controller("feCtrl", ["$scope", "$firebase", "$timeout",
 				$('#user_panel, #waiting_panel').hide();
 				$('#game_panel').show();
 			}
-			if( value == 'waiting' ){
+			else if( value == 'waiting' ){
+				$('#user_panel, #game_panel').hide();
+				$('#waiting_panel').show();
+				$scope.showLoader(false);
+			}
+			else if( value == 'gameover' ){
 				$('#user_panel, #game_panel').hide();
 				$('#waiting_panel').show();
 				$scope.showLoader(false);

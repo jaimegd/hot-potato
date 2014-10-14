@@ -14,17 +14,18 @@ block content
 
 
 		#game_panel
-			h1.text-center Time to work :)
+			h1.text-center Pass it on :)
 			form(ng-submit="sendPotato(user_selected)")#potato_panel
 				select.btn-block(ng-model="user_selected")
 					option(value="") -- choose a player
 					option(ng-repeat='row in users', ng-if="row.$id != user.id", value="{{row.$id}}") {{row.name}}
-				button.btn.btn-default.btn-block(type="submit") Done
+				button.btn.btn-default.btn-block(type="submit") Send
+			h3.text-center Oh man, you lost :(
 
 
 		#waiting_panel
-			h1 keep an eye open
-			h3.text-center {{name}}
+			h1 Keep an eye open
+			h3.text-center {{name|uppercase}}
 
 		div.form-group#msg
 			span.text-danger {{msg}}
