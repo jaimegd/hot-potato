@@ -2,13 +2,32 @@ var app = angular.module("hotpotatoApp", ["firebase"]);
 
 app.controller("beCtrl", ["$scope", "$firebase",
 	function($scope, $firebase) {
-		var ref = new Firebase("https://hot-potato.firebaseio.com/");
-
-		// create an AngularFire reference to the data
+		var ref = new Firebase("https://hot-potato.firebaseio.com/users");
 		var sync = $firebase(ref);
+		$scope.users = sync.$asArray();
 
-		// download the data into a local object
-		$scope.data = sync.$asObject();
+		var ref_potato = new Firebase("https://hot-potato.firebaseio.com/potato");
+		var sync_potato = $firebase(ref_potato);
+		$scope.potato = sync_potato.$asObject();
+
+		$scope.stopGame = function(){
+			$scope.potato.active = false;
+			$scope.potato.$save();
+		}
+
+		$scope.startGame = function(){
+			$scope.potato.active = true;
+			$scope.potato.$save();
+		}
+
+		$scope.assignPotato = function(value){
+			$scope.potato.user_selected = value;
+			$scope.potato.$save();
+		}
+
+		$scope.deleteUser = function(value){
+			$scope.users.$remove(value);
+		}
 	}
 ]);
 
@@ -152,5 +171,4 @@ app.controller("feCtrl", ["$scope", "$firebase", "$timeout",
 $(window).bind('beforeunload', function(){
 	var feCtrl = angular.element($("#user_panel")).scope();
 	feCtrl.removeCurrentUser()
-	//return 'sure?'
 });

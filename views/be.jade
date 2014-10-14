@@ -2,13 +2,27 @@ extends layout
 
 block content
 	div.container-fluid(ng-controller='beCtrl')
-		h1= title
+		.page-header
+			h1=title
+				small  Current status: {{potato.active}}
+
 		table.table.table-striped
 			tr
 				th User Agent
 				th Name
-				th Wins
-			tr(ng-repeat='user in data.users')
+				th Potato
+				th Status
+				th Delete
+			tr(ng-repeat='user in users')
 				td {{user.ua}} 
 				td {{user.name}}
-				td {{user.wins}}
+				td
+					button.btn(ng-click="assignPotato(user.$id)") Go
+				td
+					div(ng-if="potato.user_selected == user.$id").text-center
+						span.glyphicon.glyphicon-ok
+				td
+					button.btn(ng-click="deleteUser($index)") x
+		.pull-right
+			button.btn.btn-danger(ng-click="stopGame()") STOP
+			button.btn.btn-success(ng-click="startGame()") START
