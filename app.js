@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var be = require('./routes/be');
 
 var app = express();
 
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/be', be);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -37,6 +39,7 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
+    app.locals.pretty = true;
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
         res.render('error', {

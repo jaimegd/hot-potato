@@ -1,5 +1,34 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+	div.container-fluid(ng-controller='feCtrl')#main_content
+
+		#user_panel
+			h2.form-signin-heading.text-center Hi :)
+
+			form(ng-submit="addPlayer(name)")
+				div.form-group
+					input.form-control(ng-model="name", placeholder="Type your name")#name
+					br
+					button.btn.btn-primary.btn-block(type="submit") Let's do this
+
+
+		#game_panel
+			h1.text-center Time to work :)
+			form(ng-submit="sendPotato(user_selected)")#potato_panel
+				select.btn-block(ng-model="user_selected")
+					option(value="") -- choose a player
+					option(ng-repeat='row in users', ng-if="row.$id != user.id", value="{{row.$id}}") {{row.name}}
+				button.btn.btn-default.btn-block(type="submit") Done
+
+
+		#waiting_panel
+			h1 keep an eye open
+			h3.text-center {{name}}
+
+		div.form-group#msg
+			span.text-danger {{msg}}
+		div.form-group#loading
+
+
+				

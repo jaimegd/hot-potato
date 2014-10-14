@@ -1,0 +1,14 @@
+extends layout
+
+block content
+	div.container-fluid(ng-controller='beCtrl')
+		h1= title
+		table.table.table-striped
+			tr
+				th User Agent
+				th Name
+				th Wins
+			tr(ng-repeat='user in data.users')
+				td {{user.ua}} 
+				td {{user.name}}
+				td {{user.wins}}

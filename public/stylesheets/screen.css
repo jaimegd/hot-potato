@@ -1,0 +1,29 @@
+/* line 1, ../sass/screen.sass */
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+
+/* line 6, ../sass/screen.sass */
+select {
+  background: white;
+  height: 34px;
+}
+
+/* line 10, ../sass/screen.sass */
+#main_content {
+  max-width: 330px;
+  padding: 15px;
+  margin: 30px auto 0;
+}
+
+/* line 15, ../sass/screen.sass */
+#game_panel, #waiting_panel {
+  display: none;
+}
+
+/* line 18, ../sass/screen.sass */
+.active {
+  background: #ffa800;
+}
